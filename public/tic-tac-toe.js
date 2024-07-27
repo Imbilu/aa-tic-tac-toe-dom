@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", event => {
         cell.addEventListener('click', () => handleClick(cell, index), { once: true });
     });
 
+    newGameButton.addEventListener('click', startNewGame);
+
     function handleClick(cell, index) {
         const currentClass = isXTurn ? X_IMG_SRC : O_IMG_SRC;
         placeMark(cell, currentClass, index);
@@ -66,6 +68,18 @@ document.addEventListener("DOMContentLoaded", event => {
             gameStatus.innerText = `Winner: ${isXTurn ? 'X' : 'O'}`;
         }
         cells.forEach(cell => cell.removeEventListener('click', handleClick));
+        newGameButton.disabled = false;
+    }
+
+    function startNewGame() {
+        isXTurn = true;
+        board = Array(9).fill(null);
+        gameStatus.innerText = '';
+        cells.forEach(cell => {
+            cell.innerHTML = '';
+            cell.addEventListener('click', () => handleClick(cell, index), { once: true });
+        });
+        newGameButton.disabled = true;
     }
 
 })
